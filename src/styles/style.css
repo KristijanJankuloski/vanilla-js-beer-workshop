@@ -25,3 +25,27 @@
 .hero-title {
     text-shadow: black 3px 3px 5px;
 }
+
+.item-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+}
+
+.img-card {
+    /* width: 50px; */
+    max-height: 200px;
+    width: auto;
+}
+
+#main-content {
+    display: none;
+}
+
+.detail-img {
+    height: 600px;
+}
+
+.detail-content {
+    display: none;
+}
