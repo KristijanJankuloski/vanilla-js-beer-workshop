@@ -32,6 +32,12 @@
     gap: 16px;
 }
 
+@media screen and (max-width: 1400px) {
+    .item-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
 .img-card {
     /* width: 50px; */
     max-height: 200px;

@@ -22,8 +22,8 @@
                 </ul>
                 <span class="spinner-border loading-spinner"></span>
                 <form action="" class="d-flex" id="search-form">
-                    <input class="form-control me-2" type="text" placeholder="Search" id="search-input">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                    <input class="form-control me-2" type="text" placeholder="Search" required id="search-input">
+                    <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </form>
             </div>
         </nav>
@@ -39,10 +39,10 @@
               </div>
         </div>
         <div class="container" id="main-content">
-            <div class="container p-3"> Filters:
+            <div class="container p-3">
                 <div class="btn-group">
                     <div class="btn-group">
-                        <button class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown">Items Per-page</button>
+                        <button class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-filter"></i> Items Per-page</button>
                         <div class="dropdown-menu">
                             <a href="#" class="dropdown-item" id="10-beers">10 beers</a>
                             <a href="#" class="dropdown-item" id="20-beers">20 beers</a>
@@ -50,12 +50,16 @@
                         </div>
                     </div>
                     <div class="btn-group">
-                        <button class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown">Sort by</button>
+                        <button class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-filter"></i> Sort by</button>
                         <div class="dropdown-menu">
-                            <a href="#" class="dropdown-item">Name</a>
-                            <a href="#" class="dropdown-item">ABV</a>
-                            <a href="#" class="dropdown-item">Bitterness</a>
-                            <a href="#" class="dropdown-item">Production date</a>
+                            <a href="#" class="dropdown-item" id="sort-by-name-asc"><i class="fa-solid fa-arrow-up"></i> Name A-Z</a>
+                            <a href="#" class="dropdown-item" id="sort-by-name-des"><i class="fa-solid fa-arrow-down"></i> Name Z-A</a>
+                            <a href="#" class="dropdown-item" id="sort-by-abv-asc"><i class="fa-solid fa-arrow-up"></i> ABV</a>
+                            <a href="#" class="dropdown-item" id="sort-by-abv-des"><i class="fa-solid fa-arrow-down"></i> ABV</a>
+                            <a href="#" class="dropdown-item" id="sort-by-ibu-asc"><i class="fa-solid fa-arrow-up"></i> Bitterness</a>
+                            <a href="#" class="dropdown-item" id="sort-by-ibu-des"><i class="fa-solid fa-arrow-down"></i> Bitterness</a>
+                            <a href="#" class="dropdown-item" id="sort-by-date-asc"><i class="fa-solid fa-arrow-up"></i> Production date oldest</a>
+                            <a href="#" class="dropdown-item" id="sort-by-date-des"><i class="fa-solid fa-arrow-down"></i> Production date newest</a>
                         </div>
                     </div>
                 </div>

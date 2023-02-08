@@ -1,12 +1,13 @@
 import {BASE_URL} from "./constants.js";
+import beerDetailsPage from "./detailsPageBuilder.js";
 
-export default function createBeerCard(beer, detailBuild){
+export default function createBeerCard(beer){
     const card = document.createElement('div');
     card.className = "card col";
     const cardImg = document.createElement('img');
     const cardImgDiv = document.createElement('div');
     cardImgDiv.className = "d-flex justify-content-center";
-    cardImg.className = "card-img-top img-card";
+    cardImg.className = "card-img-top img-card p-2";
     cardImg.src = beer.image_url;
     cardImgDiv.appendChild(cardImg);
     card.appendChild(cardImgDiv);
@@ -25,7 +26,7 @@ export default function createBeerCard(beer, detailBuild){
     cardButton.innerText = "More details";
     cardButton.addEventListener('click', e =>{
         fetch(`${BASE_URL}/${beer.id}`).then(response => response.json()).then(data => {
-            detailBuild(data[0]);
+            beerDetailsPage(data[0]);
         });
     });
     cardBody.appendChild(cardButton);
