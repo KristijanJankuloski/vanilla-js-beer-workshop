@@ -3,7 +3,7 @@ This workshop is a **single page web-app** about all things beer. It is made usi
 ## Project structure
 The entire project is loaded in the `index.html` which loads the font awesome and bootstrap libraries as well as the javascript module contained in `app.js`.
 #### JavaScript sub-division
-The `app.js` started as a single file that kept getting bigger, so I decided to split up the file in to several standalone modules that do certain tasks. 
+The [app.js](https://github.com/chrissjj/vanilla-js-beer-workshop/blob/master/src/scripts/app.js) started as a single file that kept getting bigger, so I decided to split up the file in to several standalone modules that do certain tasks. 
 
 > `constants.js` contains all the constants that will be used though the project like the url for the api
 
