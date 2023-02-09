@@ -13,7 +13,13 @@
 
 .loading-spinner {
     margin-right: 16px;
-    display: none;
+}
+
+.search-error {
+    position: absolute;
+    top: 6vh;
+    right: 2vw;
+    z-index: 2;
 }
 
 .hero {

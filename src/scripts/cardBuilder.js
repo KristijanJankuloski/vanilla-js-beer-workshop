@@ -24,10 +24,15 @@ export default function createBeerCard(beer){
     const cardButton = document.createElement('button');
     cardButton.className = "btn btn-sm btn-primary";
     cardButton.innerText = "More details";
-    cardButton.addEventListener('click', e =>{
-        fetch(`${BASE_URL}/${beer.id}`).then(response => response.json()).then(data => {
+    cardButton.addEventListener('click', async e =>{
+        try {
+            const response = await fetch(`${BASE_URL}/${beer.id}`);
+            const data = await response.json();
             beerDetailsPage(data[0]);
-        });
+        }
+        catch (err) {
+            console.error(err);
+        }
     });
     cardBody.appendChild(cardButton);
     card.appendChild(cardBody);

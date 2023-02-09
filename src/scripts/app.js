@@ -16,28 +16,43 @@ function renderBeers(beers){
     });
 }
 
-document.querySelector("#list-beers-link").addEventListener('click', e => {
+document.querySelector("#list-beers-link").addEventListener('click', async e => {
     e.preventDefault();
-    fetch(BASE_URL).then(response => response.json()).then(data => {
+    try {
+        const response = await fetch(BASE_URL);
+        const data = await response.json();
         currentBeerList = data;
         renderBeers(data);
-    });
+    }
+    catch (err) {
+        console.error(err);
+    }
 });
 
-document.querySelector("#get-random-beer").addEventListener('click', e => {
+document.querySelector("#get-random-beer").addEventListener('click', async e => {
     e.preventDefault();
-    fetch(`${BASE_URL}/random`).then(response => response.json()).then(data => {
+    try {
+        const response = await fetch(`${BASE_URL}/random`);
+        const data = await response.json();
         document.querySelector(".hero-container").classList.add('hidden');
         beerDetailsPage(data[0]);
-    });
+    }
+    catch (err) {
+        console.error(err);
+    }
 });
 
-document.querySelector("#hero-action-btn").addEventListener('click', e => {
+document.querySelector("#hero-action-btn").addEventListener('click', async e => {
     e.preventDefault();
-    fetch(BASE_URL).then(response => response.json()).then(data => {
+    try {
+        const response = await fetch(BASE_URL);
+        const data = await response.json();
         currentBeerList = data;
         renderBeers(data);
-    });
+    }
+    catch (err) {
+        console.error(err);
+    }
 });
 
 document.querySelector("#logo-brand").addEventListener('click', e => {
@@ -45,20 +60,38 @@ document.querySelector("#logo-brand").addEventListener('click', e => {
     location.reload();
 });
 
-document.querySelector("#search-form").addEventListener('submit', e => {
+document.querySelector("#search-form").addEventListener('submit', async e => {
     e.preventDefault();
+    const loader = document.querySelector(".loading-spinner");
+    loader.classList.remove('hidden');
     let keyword = document.querySelector("#search-input").value;
     keyword = keyword.replaceAll(" ", "_");
-    fetch(`${BASE_URL}?beer_name=${keyword}`).then(response => response.json()).then(data => {
+    try {
+        const response = await fetch(`${BASE_URL}?beer_name=${keyword}`);
+        const data = await response.json();
         if(!data.length) {
             console.log("No beers matching keyword");
+            loader.classList.add('hidden');
+            let errAlert = document.querySelector(".search-error");
+            errAlert.classList.remove('hidden');
             return;
         }
         currentBeerList = data;
         renderBeers(data);
+        loader.classList.add('hidden');
         e.target.reset();
-    });
+    }
+    catch (err) {
+        let errAlert = document.querySelector(".search-error");
+        errAlert.classList.remove('hidden');
+        console.error(err);
+    }
 });
+
+document.querySelector("#no-beer-err").addEventListener('click', () => {
+    let errAlert = document.querySelector(".search-error");
+    errAlert.classList.add('hidden');
+})
 
 document.querySelector("#sort-by-name-asc").addEventListener('click', e => {
     e.preventDefault();

@@ -20,7 +20,11 @@
                     <li class="nav-item"><a href="#" class="nav-link" id="list-beers-link">Beers</a></li>
                     <li class="nav-item"><a href="#" class="nav-link" id="get-random-beer">Random Beer</a></li>
                 </ul>
-                <span class="spinner-border loading-spinner"></span>
+                <div class="alert alert-danger search-error hidden" role="alert">
+                    Did not find any beers!
+                    <button type="button" class="btn-close" aria-label="Close" id="no-beer-err"></button>
+                  </div>
+                <span class="spinner-border loading-spinner hidden"></span>
                 <form action="" class="d-flex" id="search-form">
                     <input class="form-control me-2" type="text" placeholder="Search" required id="search-input">
                     <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
