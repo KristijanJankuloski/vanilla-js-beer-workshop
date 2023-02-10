@@ -4,11 +4,11 @@ import createBeerCard from "./cardBuilder.js";
 
 let currentBeerList = [];
 let currentPage = 1;
+let itemsPerPage = 20;
 
 function renderBeers(beers){
     document.querySelector("#main-content").style.display = "block";
     document.querySelector(".detail-content").style.display = "none";
-    document.querySelector(".hero-container").classList.add('hidden');
     const container = document.querySelector(".item-container");
     container.innerHTML = "";
     beers.forEach(beer => {
@@ -16,8 +16,12 @@ function renderBeers(beers){
     });
 }
 
+// MAIN PAGE LINKS
 document.querySelector("#list-beers-link").addEventListener('click', async e => {
     e.preventDefault();
+    document.querySelector(".hero-container").classList.add('hidden');
+    const loading = document.querySelector(".main-loader");
+    loading.classList.remove("hidden");
     try {
         const response = await fetch(BASE_URL);
         const data = await response.json();
@@ -27,10 +31,17 @@ document.querySelector("#list-beers-link").addEventListener('click', async e => 
     catch (err) {
         console.error(err);
     }
+    finally {
+        loading.classList.add("hidden");
+    }
 });
 
+// RANDOM BEERS
 document.querySelector("#get-random-beer").addEventListener('click', async e => {
     e.preventDefault();
+    document.querySelector(".hero-container").classList.add('hidden');
+    const loading = document.querySelector(".main-loader");
+    loading.classList.remove("hidden");
     try {
         const response = await fetch(`${BASE_URL}/random`);
         const data = await response.json();
@@ -40,10 +51,17 @@ document.querySelector("#get-random-beer").addEventListener('click', async e => 
     catch (err) {
         console.error(err);
     }
+    finally {
+        loading.classList.add("hidden");
+    }
 });
 
+// HERO ACTION
 document.querySelector("#hero-action-btn").addEventListener('click', async e => {
     e.preventDefault();
+    document.querySelector(".hero-container").classList.add('hidden');
+    const loading = document.querySelector(".main-loader");
+    loading.classList.remove("hidden");
     try {
         const response = await fetch(BASE_URL);
         const data = await response.json();
@@ -53,13 +71,18 @@ document.querySelector("#hero-action-btn").addEventListener('click', async e => 
     catch (err) {
         console.error(err);
     }
+    finally {
+        loading.classList.add("hidden");
+    }
 });
 
+// PAGE RESET
 document.querySelector("#logo-brand").addEventListener('click', e => {
     e.preventDefault();
     location.reload();
 });
 
+// SEARCH HANDLER
 document.querySelector("#search-form").addEventListener('submit', async e => {
     e.preventDefault();
     const loader = document.querySelector(".loading-spinner");
@@ -93,6 +116,24 @@ document.querySelector("#no-beer-err").addEventListener('click', () => {
     errAlert.classList.add('hidden');
 })
 
+// --- ITEMS PER PAGE ---
+const allPerPages = document.querySelectorAll(".beers-per-page");
+for(let beersPerPage of allPerPages){
+    beersPerPage.addEventListener('click',async e => {
+        e.preventDefault();
+        itemsPerPage = Number(e.target.dataset.value);
+        try{
+            const response = await fetch(`${BASE_URL}?per_page=${itemsPerPage}`);
+            currentBeerList = await response.json();
+            renderBeers(currentBeerList);
+        }
+        catch(err){
+            console.error(err);
+        }
+    });
+}
+
+// --- SORTING ---
 document.querySelector("#sort-by-name-asc").addEventListener('click', e => {
     e.preventDefault();
     currentBeerList = currentBeerList.sort((a,b) =>{
@@ -160,7 +201,46 @@ document.querySelector("#sort-by-date-des").addEventListener('click', e => {
     });
     renderBeers(currentBeerList);
 });
+// --- END OF SORTING ---
 
+// PAGINATION
+document.querySelector("#prev-page").addEventListener('click', async e => {
+    // e.preventDefault();
+    if(currentPage - 1 >= 1){
+        console.log("On the first page");
+        return;
+    }
+    currentPage--;
+    if(currentPage === 1){
+        document.querySelector(".prev-page-item").classList.add("disabled");
+    }
+    try{
+        const response = await fetch(`${BASE_URL}?page=${currentPage}&per_page=${itemsPerPage}`);
+        currentBeerList = await response.json();
+        renderBeers(currentBeerList);
+    }
+    catch(err){
+        console.error(err);
+    }
+});
+
+document.querySelector("#next-page").addEventListener('click', async e => {
+    // e.preventDefault();
+    if(currentPage === 1){
+        document.querySelector(".prev-page-item").classList.remove("disabled");
+    }
+    currentPage++;
+    try{
+        const response = await fetch(`${BASE_URL}?page=${currentPage}&per_page=${itemsPerPage}`);
+        currentBeerList = await response.json();
+        renderBeers(currentBeerList);
+    }
+    catch(err){
+        console.error(err);
+    }
+});
+
+// BACK BUTTON
 document.querySelector("#back-btn").addEventListener('click', () => {
     document.querySelector("#main-content").style.display = "block";
     document.querySelector(".detail-content").style.display = "none";

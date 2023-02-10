@@ -39,10 +39,15 @@
             <div class="p-5 bg-primary text-white hero">
                 <div class="container p-5 rounded jumbotron">
                     <h1 class="hero-title">Hello Beer Lovers</h1>
-                    <p>Discover new beers, explore the brewing process and find information on your favorite brews with our comprehensive beer search app. With an extensive database of all types of beer from around the world, this app is the ultimate resource for beer enthusiasts.</p>
+                    <p>Discover new beers, explore the brewing process and find information on your favorite brews with our comprehensive
+                      beer search app. With an extensive database of all types of beer from around the world, this app is the ultimate
+                      resource for beer enthusiasts.</p>
                     <button class="btn btn-lg btn-light" type="button" id="hero-action-btn">Discover new beer</button>
                 </div>
-              </div>
+            </div>
+        </div>
+        <div class="main-loader hidden">
+          <div class="loader"></div>
         </div>
         <div class="container" id="main-content">
             <div class="container p-3">
@@ -50,9 +55,9 @@
                     <div class="btn-group">
                         <button class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-filter"></i> Items Per-page</button>
                         <div class="dropdown-menu">
-                            <a href="#" class="dropdown-item" id="10-beers">10 beers</a>
-                            <a href="#" class="dropdown-item" id="20-beers">20 beers</a>
-                            <a href="#" class="dropdown-item" id="30-beers">30 beers</a>
+                            <a href="#" class="dropdown-item beers-per-page" id="beers-10" data-value="10">10 beers</a>
+                            <a href="#" class="dropdown-item beers-per-page" id="beers-20" data-value="20">20 beers</a>
+                            <a href="#" class="dropdown-item beers-per-page" id="beers-30" data-value="30">30 beers</a>
                         </div>
                     </div>
                     <div class="btn-group">
@@ -76,8 +81,8 @@
                 </div>
                 <div class="pages pt-3">
                     <ul class="pagination justify-content-center">
-                        <li class="page-item"><a href="#" class="page-link">Previous</a></li>
-                        <li class="page-item"><a href="#" class="page-link">Next</a></li>
+                        <li class="page-item prev-page-item disabled"><a href="#" class="page-link" id="prev-page">Previous</a></li>
+                        <li class="page-item"><a href="#" class="page-link" id="next-page">Next</a></li>
                     </ul>
                 </div>
             </div>
