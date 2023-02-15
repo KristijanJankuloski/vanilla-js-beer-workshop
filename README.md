@@ -12,3 +12,5 @@ The [app.js](https://github.com/chrissjj/vanilla-js-beer-workshop/blob/master/sr
 > `detailsPageBuilder.js` that makes a details page for a given beer
 
 All modules export the required functions and variables and import modules as needed.
+
+This code defines event listeners that handle different user interactions for a beer listing website. It includes listeners to render the initial beer list, get a random beer, search for beers, change the number of beers displayed per page, and sort the beer list by name, ABV or IBU. The code uses an external constants.js file to import the base URL for the API endpoint, and two other modules, detailsPageBuilder.js and cardBuilder.js, to handle the creation of DOM elements. The beer data is retrieved using the Fetch API and rendered on the page using a DOM manipulation method.

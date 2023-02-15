@@ -5,6 +5,7 @@ import createBeerCard from "./cardBuilder.js";
 let currentBeerList = [];
 let currentPage = 1;
 let itemsPerPage = 20;
+let searchQuery = "";
 
 function renderBeers(beers){
     document.querySelector("#main-content").style.display = "block";
@@ -19,6 +20,7 @@ function renderBeers(beers){
 // MAIN PAGE LINKS
 document.querySelector("#list-beers-link").addEventListener('click', async e => {
     e.preventDefault();
+    searchQuery = "";
     document.querySelector(".hero-container").classList.add('hidden');
     const loading = document.querySelector(".main-loader");
     loading.classList.remove("hidden");
@@ -39,6 +41,7 @@ document.querySelector("#list-beers-link").addEventListener('click', async e => 
 // RANDOM BEERS
 document.querySelector("#get-random-beer").addEventListener('click', async e => {
     e.preventDefault();
+    searchQuery = "";
     document.querySelector(".hero-container").classList.add('hidden');
     const loading = document.querySelector(".main-loader");
     loading.classList.remove("hidden");
@@ -89,16 +92,17 @@ document.querySelector("#search-form").addEventListener('submit', async e => {
     loader.classList.remove('hidden');
     let keyword = document.querySelector("#search-input").value;
     keyword = keyword.replaceAll(" ", "_");
+    searchQuery = keyword;
     try {
-        const response = await fetch(`${BASE_URL}?beer_name=${keyword}`);
+        const response = await fetch(`${BASE_URL}?beer_name=${keyword}&per_page=${itemsPerPage}`);
         const data = await response.json();
         if(!data.length) {
-            console.log("No beers matching keyword");
             loader.classList.add('hidden');
             let errAlert = document.querySelector(".search-error");
             errAlert.classList.remove('hidden');
             return;
         }
+        console.log(data);
         currentBeerList = data;
         renderBeers(data);
         loader.classList.add('hidden');
@@ -123,7 +127,8 @@ for(let beersPerPage of allPerPages){
         e.preventDefault();
         itemsPerPage = Number(e.target.dataset.value);
         try{
-            const response = await fetch(`${BASE_URL}?per_page=${itemsPerPage}`);
+            let fetchUrl = searchQuery? `${BASE_URL}?beer_name=${searchQuery}&per_page=${itemsPerPage}` : `${BASE_URL}?per_page=${itemsPerPage}`;
+            const response = await fetch(fetchUrl);
             currentBeerList = await response.json();
             renderBeers(currentBeerList);
         }
@@ -206,7 +211,7 @@ document.querySelector("#sort-by-date-des").addEventListener('click', e => {
 // PAGINATION
 document.querySelector("#prev-page").addEventListener('click', async e => {
     // e.preventDefault();
-    if(currentPage - 1 >= 1){
+    if(currentPage === 1){
         console.log("On the first page");
         return;
     }
@@ -215,7 +220,8 @@ document.querySelector("#prev-page").addEventListener('click', async e => {
         document.querySelector(".prev-page-item").classList.add("disabled");
     }
     try{
-        const response = await fetch(`${BASE_URL}?page=${currentPage}&per_page=${itemsPerPage}`);
+        let fetchUrl = searchQuery? `${BASE_URL}?beer_name=${searchQuery}&page=${currentPage}&per_page=${itemsPerPage}` : `${BASE_URL}?page=${currentPage}&per_page=${itemsPerPage}`;
+        const response = await fetch(fetchUrl);
         currentBeerList = await response.json();
         renderBeers(currentBeerList);
     }
@@ -231,7 +237,8 @@ document.querySelector("#next-page").addEventListener('click', async e => {
     }
     currentPage++;
     try{
-        const response = await fetch(`${BASE_URL}?page=${currentPage}&per_page=${itemsPerPage}`);
+        let fetchUrl = searchQuery? `${BASE_URL}?beer_name=${searchQuery}&page=${currentPage}&per_page=${itemsPerPage}` : `${BASE_URL}?page=${currentPage}&per_page=${itemsPerPage}`;
+        const response = await fetch(fetchUrl);
         currentBeerList = await response.json();
         renderBeers(currentBeerList);
     }
