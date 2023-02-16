@@ -8,6 +8,7 @@ let itemsPerPage = 20;
 let searchQuery = "";
 
 function renderBeers(beers){
+    document.querySelector(".next-page-item").classList.remove("disabled");
     document.querySelector("#main-content").style.display = "block";
     document.querySelector(".detail-content").style.display = "none";
     const container = document.querySelector(".item-container");
@@ -43,7 +44,7 @@ document.querySelector("#get-random-beer").addEventListener('click', async e => 
     e.preventDefault();
     searchQuery = "";
     document.querySelector(".hero-container").classList.add('hidden');
-    const loading = document.querySelector(".main-loader");
+    const loading = document.querySelector(".loading-spinner");
     loading.classList.remove("hidden");
     try {
         const response = await fetch(`${BASE_URL}/random`);
@@ -102,7 +103,7 @@ document.querySelector("#search-form").addEventListener('submit', async e => {
             errAlert.classList.remove('hidden');
             return;
         }
-        console.log(data);
+        document.querySelector(".hero-container").classList.add('hidden');
         currentBeerList = data;
         renderBeers(data);
         loader.classList.add('hidden');
@@ -239,7 +240,12 @@ document.querySelector("#next-page").addEventListener('click', async e => {
     try{
         let fetchUrl = searchQuery? `${BASE_URL}?beer_name=${searchQuery}&page=${currentPage}&per_page=${itemsPerPage}` : `${BASE_URL}?page=${currentPage}&per_page=${itemsPerPage}`;
         const response = await fetch(fetchUrl);
-        currentBeerList = await response.json();
+        let data = await response.json();
+        if(!data.length){
+            document.querySelector(".next-page-item").classList.add("disabled");
+            return;
+        }
+        currentBeerList = data;
         renderBeers(currentBeerList);
     }
     catch(err){
@@ -249,6 +255,11 @@ document.querySelector("#next-page").addEventListener('click', async e => {
 
 // BACK BUTTON
 document.querySelector("#back-btn").addEventListener('click', () => {
+    if(!currentBeerList.length){
+        document.querySelector(".detail-content").style.display = "none";
+        document.querySelector(".hero-container").classList.remove('hidden');
+        return;
+    }
     document.querySelector("#main-content").style.display = "block";
     document.querySelector(".detail-content").style.display = "none";
 });
